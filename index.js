@@ -18,40 +18,21 @@ db.serialize(() => {
   // });
 });
 
-exec('git config --local user.email "diegton@gmail.com"', (err) => console.log(err))
-exec('git config --local user.name "Diegton Rodrigues"', (err) => console.log(err))
-
-// const interval = setInterval(() => {
-//   console.log("interval")
-// }, 5000)
+try {
+  exec('git config --local user.email "diegton@gmail.com"', (err) => console.log(err))
+  exec('git config --local user.name "Diegton Rodrigues"', (err) => console.log(err))
+} catch (e) { }
+exec('ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts', (err, stdout) => {
+  console.log("user")
+  console.log(stdout)
+})
 
 app.use(express.json());
-
-app.get('/git', (req, res) => {
-
-  exec('git add temp.db', (err, stdout, stderr) => {
-    if (err) {
-      console.log(err)
-      res.json('error')
-    } else {
-      exec(`git commit -m "${(new Date).getTime()}"`, (err, stdout, stderr) => {
-        if (err) {
-          console.log(err)
-          res.send(err)
-        } else {
-          res.json('success')
-        }
-      })
-    }
-  });
-
-})
 
 app.get('/users', (req, res) => {
   db.serialize(() => {
     db.all("SELECT id, name FROM users", (err, rows) => {
       res.json(rows)
-      // interval.refresh()
     });
   });
 })
@@ -66,5 +47,5 @@ app.post('/users', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`app listening on port ${port}`)
 })
