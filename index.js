@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const uuidv4 = require('uuid').v4;
 const express = require('express')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 const { exec } = require('child_process');
 
 
@@ -18,14 +18,14 @@ db.serialize(() => {
   // });
 });
 
-try {
-  exec('git config --local user.email "diegton@gmail.com"', (err) => console.log(err))
-  exec('git config --local user.name "Diegton Rodrigues"', (err) => console.log(err))
-} catch (e) { }
-exec('ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts', (err, stdout) => {
-  console.log("user")
-  console.log(stdout)
-})
+// try {
+//   exec('git config --local user.email "diegton@gmail.com"', (err) => console.log(err))
+//   exec('git config --local user.name "Diegton Rodrigues"', (err) => console.log(err))
+// } catch (e) { }
+// exec('ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts', (err, stdout) => {
+//   console.log("user")
+//   console.log(stdout)
+// })
 
 app.use(express.json());
 

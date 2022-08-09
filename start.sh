@@ -1,5 +1,10 @@
 #!/bin/bash
-
+chmod 600 /root/.ssh/id_rsa
+echo "---"
+ls -l /root/.ssh
+echo "---"
+git pull
+npm start &
 while true
 do
     git add temp.db
